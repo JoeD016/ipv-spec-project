@@ -1,9 +1,29 @@
-import React from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
+import Button from '@/components/buttons/Button';
 import Layout from '@/components/layout/Layout';
 import NextImage from '@/components/NextImage';
 
 export default function Upload() {
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [isSubmittingToBackend, setIsSubmittingToBackend] = useState(false);
+
+  const uploadFile = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e?.target?.files) {
+      setUploadedFile(e.target.files[0]);
+    }
+  };
+
+  const submitToBackend = async () => {
+    if (uploadedFile) {
+      setIsSubmittingToBackend(true);
+      const formData = new FormData();
+      formData.append('file', uploadedFile);
+      // upload here
+      setIsSubmittingToBackend(false);
+    }
+  };
+
   return (
     <Layout>
       <main>
@@ -25,6 +45,31 @@ export default function Upload() {
             <p className='text-md my-2 text-gray-800'>
               Once you have your PCAP file, upload it here.
             </p>
+            <div className='relative border border-dashed border-gray-500'>
+              <input
+                type='file'
+                multiple
+                onChange={uploadFile}
+                className='relative z-50 block h-full w-full cursor-pointer p-20 opacity-0'
+              />
+              <div className='absolute top-0 right-0 left-0 m-auto p-10 text-center'>
+                <h4>
+                  Drop files anywhere to upload
+                  <br />
+                  or
+                </h4>
+                <p className=''>Select Files</p>
+              </div>
+            </div>
+            <Button
+              {...(uploadedFile ? {} : { disabled: true })}
+              {...(isSubmittingToBackend ? { loading: true } : {})}
+              variant='primary'
+              className='mt-4'
+              onClick={submitToBackend}
+            >
+              Submit for Analysis
+            </Button>
           </div>
         </section>
       </main>
