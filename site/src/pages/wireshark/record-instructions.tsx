@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React from 'react';
 
 import Layout from '@/components/layout/Layout';
@@ -7,6 +8,9 @@ import NextImage from '@/components/NextImage';
 export default function RecordInstructions() {
   return (
     <Layout>
+      <Head>
+        <title>Record Instructions</title>
+      </Head>
       <main>
         <section className='bg-white'>
           <div className='layout min-h-screen py-20 pb-10 text-black'>

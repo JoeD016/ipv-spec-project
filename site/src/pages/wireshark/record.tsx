@@ -1,10 +1,11 @@
+import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 
 import Layout from '@/components/layout/Layout';
 import ButtonLink from '@/components/links/ButtonLink';
 
 export default function Record() {
-  const [time, setTime] = useState(600); // 10 minutes
+  const [time, setTime] = useState(599); // 10 minutes
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -23,6 +24,9 @@ export default function Record() {
 
   return (
     <Layout>
+      <Head>
+        <title>Record</title>
+      </Head>
       <main>
         <section className='bg-white'>
           <div className='layout min-h-screen py-20 pb-10 text-black'>
@@ -38,7 +42,10 @@ export default function Record() {
               </ButtonLink>
             ) : (
               <>
-                <h3 className='my-3'>{time} seconds remaining</h3>
+                <h3 className='my-3'>
+                  {new Date(time * 1000).toISOString().substring(15, 19)}{' '}
+                  seconds remaining
+                </h3>
                 <ButtonLink
                   href='/wireshark/upload'
                   variant='primary'

@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React from 'react';
 
 import Layout from '@/components/layout/Layout';
@@ -6,6 +7,9 @@ import ButtonLink from '@/components/links/ButtonLink';
 export default function Requirements() {
   return (
     <Layout>
+      <Head>
+        <title>Requirements</title>
+      </Head>
       <main>
         <section className='bg-white'>
           <div className='layout flex min-h-screen flex-col items-center justify-center pb-10 text-center text-black'>
@@ -16,7 +20,7 @@ export default function Requirements() {
             <div className='layout mt-4 flex flex-row items-center justify-center gap-4'>
               <ButtonLink
                 variant='outline'
-                href='https://wireshark.org/download'
+                href='https://www.wireshark.org/#download'
                 target='_blank'
               >
                 Download Wireshark

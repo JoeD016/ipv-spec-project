@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import * as React from 'react';
 
 import Layout from '@/components/layout/Layout';
@@ -6,6 +7,9 @@ import ArrowLink from '@/components/links/ArrowLink';
 export default function NotFoundPage() {
   return (
     <Layout>
+      <Head>
+        <title>404: Page Not Found</title>
+      </Head>
       <main>
         <section className='bg-white'>
           <div className='layout flex min-h-screen flex-col items-center justify-center text-center text-black'>
