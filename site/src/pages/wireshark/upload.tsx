@@ -1,32 +1,23 @@
 import Head from 'next/head';
-import React, { ChangeEvent, useState } from 'react';
-
-import { uploadFile } from '@/lib/api';
+import React, { ChangeEvent } from 'react';
 
 import Button from '@/components/buttons/Button';
 import Layout from '@/components/layout/Layout';
 import NextImage from '@/components/NextImage';
 
+import { useAnalysis } from '@/context/analysis';
+
 export default function Upload() {
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [isSubmittingToBackend, setIsSubmittingToBackend] = useState(false);
+  const {
+    isSubmittingDataForAnalysis,
+    submitDataForAnalysis,
+    inputData,
+    setNetworkActivityCSV,
+  } = useAnalysis();
 
   const onUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (e?.target?.files) {
-      setUploadedFile(e.target.files[0]);
-    }
-  };
-
-  const submitToBackend = async () => {
-    if (
-      uploadedFile &&
-      // same validation performed on backend, just to improve upload UX
-      uploadedFile.name.endsWith('.csv') &&
-      uploadedFile.size < 1024 * 1024 * 256
-    ) {
-      setIsSubmittingToBackend(true);
-      uploadFile(uploadedFile);
-      setIsSubmittingToBackend(false);
+      setNetworkActivityCSV(e.target.files[0]);
     }
   };
 
@@ -56,13 +47,13 @@ export default function Upload() {
             <p className='text-md my-2 text-gray-800'>
               Once you have your CSV file, upload it here.
             </p>
-            {uploadedFile ? (
+            {inputData?.networkActivityCSV ? (
               <div>
                 <h4 className='text-md my-2 text-gray-800'>
-                  {uploadedFile.name}{' '}
+                  {inputData?.networkActivityCSV.name}{' '}
                   <button
                     className='inline-flex items-center rounded-md bg-red-600 px-3 py-1.5 text-xs text-white hover:bg-red-700'
-                    onClick={() => setUploadedFile(null)}
+                    onClick={() => setNetworkActivityCSV()}
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -80,7 +71,7 @@ export default function Upload() {
                     </svg>
                   </button>
                 </h4>
-                {uploadedFile.name.endsWith('.csv') ? null : (
+                {inputData?.networkActivityCSV.name.endsWith('.csv') ? null : (
                   <p className='text-red-500'>File must be a CSV</p>
                 )}
               </div>
@@ -103,11 +94,11 @@ export default function Upload() {
               </div>
             )}
             <Button
-              {...(uploadedFile ? {} : { disabled: true })}
-              {...(isSubmittingToBackend ? { loading: true } : {})}
+              {...(inputData?.networkActivityCSV ? {} : { disabled: true })}
+              {...(isSubmittingDataForAnalysis ? { loading: true } : {})}
               variant='primary'
               className='mt-4'
-              onClick={submitToBackend}
+              onClick={submitDataForAnalysis}
             >
               Submit for Analysis
             </Button>
