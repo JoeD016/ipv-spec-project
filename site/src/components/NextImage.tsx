@@ -3,29 +3,31 @@ import * as React from 'react';
 
 import clsxm from '@/lib/clsxm';
 
-type NextImageProps = (
-  | { width: string | number; height: string | number }
-  | { layout: 'fill'; width?: string | number; height?: string | number }
-) &
-  ImageProps;
+type NextImageProps = {
+  width: string | number;
+  height: string | number;
+} & ImageProps;
 
 export default function NextImage({
   className,
   src,
   width,
   height,
-  layout,
   alt,
   ...rest
 }: NextImageProps) {
   return (
-    <div className={clsxm(className)}>
+    <div
+      className={clsxm(className)}
+      style={{ width: '100%', maxHeight: 1000, flex: 1 }}
+    >
       <Image
         className='transition-all duration-200'
         src={src}
-        width={width}
-        height={height}
-        layout={layout}
+        height={1000}
+        width={2000}
+        // layout='fill'
+        objectFit='contain'
         alt={alt}
         loader={customLoader}
         placeholder='blur'

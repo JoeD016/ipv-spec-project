@@ -13,11 +13,15 @@ app.config["UPLOAD_FOLDER"] = "./uploads"
 
 @app.route("/upload", methods=["POST"])
 def upload_file():
-    uploaded_file = request.files["file"]
-    if uploaded_file.filename == "":
-        return "No file selected", 400
-    parse_csv(uploaded_file)
-    return "File uploaded", 200
+    print(request.files)
+    networkActivityCSV = request.files["networkActivityCSV"]
+    if networkActivityCSV.filename == "":
+        return "No networkActivityCSV provided", 400
+    macAddressCSV = request.files["macAddressCSV"]
+    if macAddressCSV.filename == "":
+        return "No macAddressCSV provided", 400
+    results = parse_csv(networkActivityCSV, macAddressCSV)
+    return "Analysis!", 200
 
 
 if __name__ == "__main__":

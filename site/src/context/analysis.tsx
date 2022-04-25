@@ -2,11 +2,11 @@ import React, { useContext, useState } from 'react';
 
 import { uploadFile } from '@/lib/api';
 
-export interface IAnalysis {
-  // this is a general type, will be specific when it has more clarity
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  results?: string;
-}
+// export interface IAnalysis {
+//   // this is a general type, will be specific when it has more clarity
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   results?: string;
+// }
 
 export interface IInputData {
   macAddressCSV?: string;
@@ -14,7 +14,8 @@ export interface IInputData {
 }
 
 export type AnalysisContextType = {
-  analysis: IAnalysis;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  analysis: any;
   setMacAddressCSV: (macAddressCSV: string) => void;
   setNetworkActivityCSV: (networkActivityCSV?: File) => void;
   submitDataForAnalysis: () => Promise<void>;
@@ -38,7 +39,7 @@ export const useAnalysis = (): AnalysisContextType =>
   useContext(AnalysisContext);
 
 export const AnalysisProvider: React.FC = ({ children }) => {
-  const [analysis, setAnalysis] = useState<IAnalysis>({});
+  const [analysis, setAnalysis] = useState({});
   const [inputData, setInputData] = useState<IInputData>({});
   const [isSubmittingDataForAnalysis, setIsSubmittingDataforAnalysis] =
     useState(false);
@@ -66,7 +67,8 @@ export const AnalysisProvider: React.FC = ({ children }) => {
       inputData?.networkActivityCSV.size < 1024 * 1024 * 256
     ) {
       setIsSubmittingDataforAnalysis(true);
-      uploadFile(inputData.networkActivityCSV);
+      const analysis = uploadFile(inputData);
+      setAnalysis(analysis);
       setIsSubmittingDataforAnalysis(false);
     }
   };

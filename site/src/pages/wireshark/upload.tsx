@@ -1,19 +1,14 @@
 import Head from 'next/head';
 import React, { ChangeEvent } from 'react';
+import ReactPlayer from 'react-player';
 
-import Button from '@/components/buttons/Button';
 import Layout from '@/components/layout/Layout';
-import NextImage from '@/components/NextImage';
+import ButtonLink from '@/components/links/ButtonLink';
 
 import { useAnalysis } from '@/context/analysis';
 
 export default function Upload() {
-  const {
-    isSubmittingDataForAnalysis,
-    submitDataForAnalysis,
-    inputData,
-    setNetworkActivityCSV,
-  } = useAnalysis();
+  const { inputData, setNetworkActivityCSV } = useAnalysis();
 
   const onUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (e?.target?.files) {
@@ -37,12 +32,13 @@ export default function Upload() {
               file. To do this, go to File, click Export Packet Dissections, and
               export as a csv. A demonstration of this flow is shown below:
             </p>
-            <NextImage
-              // TODO make gif displaying workflow
-              src='/images/wireshark.png'
+            <ReactPlayer
               width='100%'
               height='100%'
-              className='flex'
+              url='/videos/save_capture_data.mp4'
+              playing
+              loop
+              controls
             />
             <p className='text-md my-2 text-gray-800'>
               Once you have your CSV file, upload it here.
@@ -93,15 +89,18 @@ export default function Upload() {
                 </div>
               </div>
             )}
-            <Button
+            <ButtonLink
               {...(inputData?.networkActivityCSV ? {} : { disabled: true })}
-              {...(isSubmittingDataForAnalysis ? { loading: true } : {})}
               variant='primary'
               className='mt-4'
-              onClick={submitDataForAnalysis}
+              href={
+                inputData?.networkActivityCSV
+                  ? '/wireshark/upload-mac-addresses'
+                  : '/wireshark/upload'
+              }
             >
-              Submit for Analysis
-            </Button>
+              Continue
+            </ButtonLink>
           </div>
         </section>
       </main>
