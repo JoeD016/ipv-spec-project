@@ -21,7 +21,8 @@ def upload_file():
     if macAddressCSV.filename == "":
         return "No macAddressCSV provided", 400
     results = parse_csv(networkActivityCSV, macAddressCSV)
-    return "Analysis!", 200
+    
+    return results, 200
 
 
 if __name__ == "__main__":
