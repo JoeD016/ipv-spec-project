@@ -21,8 +21,12 @@ export default function Upload() {
 
   const onSubmit = async () => {
     if (inputData?.macAddressCSV) {
-      await submitDataForAnalysis();
-      // window.location.replace('/analysis');
+      const success = await submitDataForAnalysis();
+      if (success) {
+        window.location.replace('/analysis');
+      } else {
+        alert("Couldn't submit data for analysis");
+      }
     }
   };
 
@@ -37,7 +41,11 @@ export default function Upload() {
             <h2 className='mt-8 text-2xl md:text-4xl'>
               Upload Mac Address Data
             </h2>
-            <p className='text-md my-2 text-gray-800'>TODO: WRITE TEXT</p>
+            <p className='text-md my-2 text-gray-800'>
+              We will also need the records of all devices which exist on the
+              network. We can retrieve these through doing the actions shown
+              below on Wireshark.
+            </p>
             <ReactPlayer
               width='100%'
               height='100%'

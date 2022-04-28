@@ -18,7 +18,7 @@ export type AnalysisContextType = {
   analysis: any;
   setMacAddressCSV: (macAddressCSV: string) => void;
   setNetworkActivityCSV: (networkActivityCSV?: File) => void;
-  submitDataForAnalysis: () => Promise<void>;
+  submitDataForAnalysis: () => Promise<boolean>;
   isSubmittingDataForAnalysis: boolean;
   inputData: IInputData;
 };
@@ -67,11 +67,14 @@ export const AnalysisProvider: React.FC = ({ children }) => {
       inputData?.networkActivityCSV.size < 1024 * 1024 * 256
     ) {
       setIsSubmittingDataforAnalysis(true);
-      const analysis = uploadFile(inputData);
-      setAnalysis(analysis);
-      console.log({ analysis });
+      const analysis = await uploadFile(inputData);
+      if (analysis) {
+        setAnalysis(analysis.data);
+      }
       setIsSubmittingDataforAnalysis(false);
+      return true;
     }
+    return false;
   };
 
   return (
