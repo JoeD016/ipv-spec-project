@@ -69,6 +69,7 @@ export const AnalysisProvider: React.FC = ({ children }) => {
       setIsSubmittingDataforAnalysis(true);
       const analysis = uploadFile(inputData);
       setAnalysis(analysis);
+      console.log({ analysis });
       setIsSubmittingDataforAnalysis(false);
     }
   };

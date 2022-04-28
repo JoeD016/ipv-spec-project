@@ -5,7 +5,7 @@ import Layout from '@/components/layout/Layout';
 import ButtonLink from '@/components/links/ButtonLink';
 
 export default function Record() {
-  const [time, setTime] = useState(299); // 5 minutes
+  const [time, setTime] = useState(59); // 1 minute
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -33,8 +33,8 @@ export default function Record() {
             <h2 className='mt-8 text-2xl md:text-4xl'>Recording...</h2>
             <p className='text-md my-2 text-gray-800'>
               To get enough data to get some meaningful analysis, we recommend
-              letting Wireshark run for about 5 minutes. For your convenience,
-              we have added a timer.
+              letting Wireshark run for about a minute. For your convenience, we
+              have added a timer.
             </p>
             {isReady ? (
               <ButtonLink href='/wireshark/upload' variant='primary'>
