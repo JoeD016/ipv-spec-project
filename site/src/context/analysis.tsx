@@ -30,7 +30,7 @@ export const AnalysisContext = React.createContext<AnalysisContextType>({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setNetworkActivityCSV: () => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  submitDataForAnalysis: async () => {},
+  submitDataForAnalysis: async () => false,
   isSubmittingDataForAnalysis: false,
   inputData: {},
 });

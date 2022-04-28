@@ -7,7 +7,7 @@ import Layout from '@/components/layout/Layout';
 
 import { useAnalysis } from '@/context/analysis';
 
-export default function Upload() {
+export default function UploadMacAddresses() {
   const {
     isSubmittingDataForAnalysis,
     submitDataForAnalysis,
