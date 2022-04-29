@@ -34,9 +34,7 @@ def get_duration_hist(mac_df, analysis_object, id):
     plt.clf()
     plt.close(fig)
 
-    analysis_object[
-        "duration_histogram"
-    ] = f"/public/images/{id}/duration_histogram.png"
+    analysis_object["duration_histogram"] = f"/images/{id}/duration_histogram.png"
     return
 
 
@@ -99,7 +97,7 @@ def get_packets_sent_and_received(mac_df, analysis_object, id):
 
     analysis_object[
         "packets_sent_and_received"
-    ] = f"public/images/{id}/packets_sent_and_received.png"
+    ] = f"images/{id}/packets_sent_and_received.png"
     return
 
 
@@ -138,7 +136,7 @@ def get_bandwidth_plots(network_df, analysis_object, id):
         plt.clf()
         plt.close(fig)
 
-        bandwidth_graphs[addr] = f"public/images/{id}/{addr}.png"
+        bandwidth_graphs[addr] = f"images/{id}/{addr}.png"
 
     analysis_object["bandwidth_graph"] = bandwidth_graphs
     return

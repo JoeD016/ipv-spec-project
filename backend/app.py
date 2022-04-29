@@ -3,7 +3,7 @@ from flask import Flask, request
 from flask_cors import CORS
 import json
 
-app = Flask(__name__, static_url_path="/public", static_folder="./public")
+app = Flask(__name__, static_url_path="/images", static_folder="./public/images")
 CORS(app)
 
 
@@ -17,7 +17,6 @@ def upload_file():
     if macAddressCSV.filename == "":
         return "No macAddressCSV provided", 400
     results = parse_csv(networkActivityCSV, macAddressCSV)
-    print(results)
     return json.dumps(results), 200
 
 

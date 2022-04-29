@@ -1,13 +1,15 @@
 import Head from 'next/head';
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import ReactPlayer from 'react-player';
 
 import Button from '@/components/buttons/Button';
 import Layout from '@/components/layout/Layout';
+import ButtonLink from '@/components/links/ButtonLink';
 
 import { useAnalysis } from '@/context/analysis';
 
 export default function UploadMacAddresses() {
+  const [isReady, setIsReady] = useState(false);
   const {
     isSubmittingDataForAnalysis,
     submitDataForAnalysis,
@@ -23,7 +25,7 @@ export default function UploadMacAddresses() {
     if (inputData?.macAddressCSV) {
       const success = await submitDataForAnalysis();
       if (success) {
-        window.location.replace('/analysis');
+        setIsReady(true);
       } else {
         alert("Couldn't submit data for analysis");
       }
@@ -65,15 +67,21 @@ export default function UploadMacAddresses() {
                 rows={10}
               />
             </div>
-            <Button
-              {...(inputData?.macAddressCSV ? {} : { disabled: true })}
-              {...(isSubmittingDataForAnalysis ? { loading: true } : {})}
-              variant='primary'
-              className='mt-4'
-              onClick={onSubmit}
-            >
-              Submit for Analysis
-            </Button>
+            {isReady ? (
+              <ButtonLink variant='dark' className='mt-4' href='/analysis'>
+                Continue
+              </ButtonLink>
+            ) : (
+              <Button
+                {...(inputData?.macAddressCSV ? {} : { disabled: true })}
+                {...(isSubmittingDataForAnalysis ? { isLoading: true } : {})}
+                variant='primary'
+                className='mt-4'
+                onClick={onSubmit}
+              >
+                Submit for Analysis
+              </Button>
+            )}
           </div>
         </section>
       </main>
