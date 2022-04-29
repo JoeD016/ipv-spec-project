@@ -32,7 +32,7 @@ export default function Analysis() {
               className='flex'
             />
             <h3 className='mt-8 text-xl md:text-2xl'>
-              Packet Sent and Received
+              Packets Sent and Received
             </h3>
             <NextImage
               src={BASE_URL + analysis?.packets_sent_and_received}
@@ -40,7 +40,7 @@ export default function Analysis() {
               height='100%'
               className='flex'
             />
-            <h3 className='mt-8 text-xl md:text-2xl'>Bandwidth Graph</h3>
+            <h3 className='mt-8 text-xl md:text-2xl'>Bandwidth Graphs</h3>
             {Object.keys(analysis?.bandwidth_graph ?? {}).map(
               (address: string) => (
                 <div key={address}>
