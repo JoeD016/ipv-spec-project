@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 
 import Layout from '@/components/layout/Layout';
 import ButtonLink from '@/components/links/ButtonLink';
+import UnderlineLink from '@/components/links/UnderlineLink';
 
 export default function Record() {
-  const [time, setTime] = useState(59); // 1 minute
+  const [time, setTime] = useState(119); // 2 minutes
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -30,10 +31,12 @@ export default function Record() {
       <main>
         <section className='bg-white'>
           <div className='layout min-h-screen py-20 pb-10 text-black'>
-            <h2 className='mt-8 text-2xl md:text-4xl'>Recording...</h2>
+            <h2 className='mt-8 text-2xl md:text-4xl'>
+              {isReady ? 'Done Recording' : 'Recording...'}
+            </h2>
             <p className='text-md my-2 text-gray-800'>
               To get enough data to get some meaningful analysis, we recommend
-              letting Wireshark run for about a minute. For your convenience, we
+              letting Wireshark run for ~2 minutes. For your convenience, we
               have added a timer.
             </p>
             {isReady ? (
@@ -42,14 +45,22 @@ export default function Record() {
               </ButtonLink>
             ) : (
               <>
-                <h3 className='my-3'>
+                <h3 className='mt-3'>
                   {new Date(time * 1000).toISOString().substring(15, 19)}{' '}
                   seconds remaining
                 </h3>
+                <h2 className='mt-3'>Manually finding hidden devices</h2>
+                <p className='text-md my-8 text-gray-800'>
+                  While waiting, check out{' '}
+                  <UnderlineLink href='https://www.wikihow.com/Find-Hidden-Cameras'>
+                    this guide on manual heuristics
+                  </UnderlineLink>{' '}
+                  for finding hidden devices.
+                </p>
                 <ButtonLink
                   href='/wireshark/upload'
                   variant='primary'
-                  className='red'
+                  className='red mt-5'
                 >
                   Continue Anyways
                 </ButtonLink>
